@@ -11,7 +11,6 @@ import android.os.SystemClock;
 import android.util.AttributeSet;
 
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -40,7 +39,7 @@ public class GameView extends SurfaceView {
     private boolean moving=false;
     private int currentFruits;
     private ArrayList<Fruits> listFruit;
-    private Game mazeActivity;
+    private Game gameActivity;
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -49,7 +48,7 @@ public class GameView extends SurfaceView {
         paint=new Paint();
         this.setBackgroundColor(Color.WHITE);
         gridGame = new GridGame();
-        mazeActivity = (Game)getContext();
+        gameActivity = (Game)getContext();
         gameLoopThread = new GameLoopThread(this,context);
         holder = getHolder();
 
@@ -109,11 +108,9 @@ public class GameView extends SurfaceView {
     public void onDraw(Canvas canvas){
 
 
-        Drawable bLetter = getResources().getDrawable(R.drawable.bletter);
         Drawable blanc = getResources().getDrawable(R.drawable.blank);
         Drawable blank = getResources().getDrawable(R.drawable.blanc);
-        Drawable end = getResources().getDrawable(R.drawable.aletter);
-        Drawable character = getResources().getDrawable(R.drawable.cible);
+        Drawable cible = getResources().getDrawable(R.drawable.cible);
         Drawable cercleBlanc = getResources().getDrawable(R.drawable.cercleblanc);
         Drawable banane = getResources().getDrawable(R.drawable.banane);
         Drawable brocoli = getResources().getDrawable(R.drawable.brocoli);
@@ -126,61 +123,60 @@ public class GameView extends SurfaceView {
 
         int largeurCase =Math.min( w / 16,h/16);
         int largeurCaseInNewFrame =Math.min( w/4,h/4);
-        int tailleFenetre =Math.min( w / 2,h/2);
         int caseX=x/largeurCase;
         int caseY=y/largeurCase;
-        int deCalageCaseX=x%largeurCase*largeurCaseInNewFrame/largeurCase;
-        int deCalageCaseY=y%largeurCase*largeurCaseInNewFrame/largeurCase;
+        int decalageCaseX=x%largeurCase*largeurCaseInNewFrame/largeurCase;
+        int decalageCaseY=y%largeurCase*largeurCaseInNewFrame/largeurCase;
 
         paint.setColor(Color.BLACK);
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                int x1 =largeurCaseInNewFrame * i -deCalageCaseX;
-                int x2= largeurCaseInNewFrame * (i + 1)-deCalageCaseX;
-                int y1= largeurCaseInNewFrame * j -deCalageCaseY ;
-                int y2= largeurCaseInNewFrame * (j + 1)-deCalageCaseY;
+                int x1 =largeurCaseInNewFrame * i -decalageCaseX;
+                int x2= largeurCaseInNewFrame * (i + 1)-decalageCaseX;
+                int y1= largeurCaseInNewFrame * j -decalageCaseY ;
+                int y2= largeurCaseInNewFrame * (j + 1)-decalageCaseY;
 
                 if (!(caseX - 2 + i < 0 || caseX - 2 + i >= gridGame.getX()) && !(caseY - 2 + j < 0 || caseY - 2 + j >= gridGame.getY())) {
 
 
-                    if ( gridGame.getGrille()[caseX - 2 + i][caseY - 2 + j] == 0){
+                    if ( gridGame.getGrid()[caseX - 2 + i][caseY - 2 + j] == 0){
                         blank.setBounds(y1, x1, y2, x2);
                         blank.draw(canvas);
                     }
-                    else if(gridGame.getGrille()[caseX - 2 + i][caseY - 2 + j] == 1) {
+                    else if(gridGame.getGrid()[caseX - 2 + i][caseY - 2 + j] == 1) {
                         blanc.setBounds(y1, x1, y2, x2);
                         blanc.draw(canvas);
                     }
-                    else if(gridGame.getGrille()[caseX - 2 + i][caseY - 2 + j] == 2) {
+                    else if(gridGame.getGrid()[caseX - 2 + i][caseY - 2 + j] == 2) {
                         cercleBlanc.setBounds(y1, x1, y2, x2);
                         cercleBlanc.draw(canvas);
                     }
-                    else if(gridGame.getGrille()[caseX - 2 + i][caseY - 2 + j] == 3) {
+                    else if(gridGame.getGrid()[caseX - 2 + i][caseY - 2 + j] == 3) {
                         banane.setBounds(y1, x1, y2, x2);
                         banane.draw(canvas);
 
                     }
-                    else if(gridGame.getGrille()[caseX - 2 + i][caseY - 2 + j] == 4) {
+                    else if(gridGame.getGrid()[caseX - 2 + i][caseY - 2 + j] == 4) {
                         brocoli.setBounds(y1, x1, y2, x2);
                         brocoli.draw(canvas);
 
                     }
-                    else if(gridGame.getGrille()[caseX - 2 + i][caseY - 2 + j] == 5) {
+                    else if(gridGame.getGrid()[caseX - 2 + i][caseY - 2 + j] == 5) {
                         carotte.setBounds(y1, x1, y2, x2);
                         carotte.draw(canvas);
 
                     }
-                    else if(gridGame.getGrille()[caseX - 2 + i][caseY - 2 + j] == 6) {
+                    else if(gridGame.getGrid()[caseX - 2 + i][caseY - 2 + j] == 6) {
                         chou.setBounds(y1, x1, y2, x2);
                         chou.draw(canvas);
 
                     }
-                    else if(gridGame.getGrille()[caseX - 2 + i][caseY - 2 + j] == 7) {
+                    else if(gridGame.getGrid()[caseX - 2 + i][caseY - 2 + j] == 7) {
                         citron.setBounds(y1, x1, y2, x2);
                         citron.draw(canvas);
 
                     }
-                    else if(gridGame.getGrille()[caseX - 2 + i][caseY - 2 + j] == 8) {
+                    else if(gridGame.getGrid()[caseX - 2 + i][caseY - 2 + j] == 8) {
                         raisin.setBounds(y1, x1, y2, x2);
                         raisin.draw(canvas);
                     }
@@ -191,15 +187,14 @@ public class GameView extends SurfaceView {
                 }
             }
 
-
-            character.setBounds(w / 2 - largeurCase, h / 2 - largeurCase, (w / 2) + largeurCase, (h / 2) + largeurCase);
-            character.draw(canvas);
+            cible.setBounds(w / 2 - largeurCase, h / 2 - largeurCase, (w / 2) + largeurCase, (h / 2) + largeurCase);
+            cible.draw(canvas);
             if (launching) {
                 paint.setStrokeWidth(16);
                 canvas.drawLine(h / 2, w / 2, launchFromX, launchFromY, paint);
             }
         }
-        mazeActivity.wordToFind.setText(listFruit.get(currentFruits).getName());
+        gameActivity.wordToFind.setText(listFruit.get(currentFruits).getName());
     }
 
 
@@ -222,27 +217,27 @@ public class GameView extends SurfaceView {
         int caseX0=this.x/largeurCase;
         int caseY0=this.y/largeurCase;
 
-        if (newX>=0 && newY>=0&&!(caseX < 0 || caseX >= gridGame.getX()) && !(caseY  < 0 || caseY >= gridGame.getY()) && !(gridGame.getGrille()[caseX][caseY] == 0)) {
+        if (newX>=0 && newY>=0&&!(caseX < 0 || caseX >= gridGame.getX()) && !(caseY  < 0 || caseY >= gridGame.getY()) && !(gridGame.getGrid()[caseX][caseY] == 0)) {
             this.x=newX;
             this.y=newY;
         }
-        else if (newY>=0 &&!(caseX0 < 0 || caseX0 >= gridGame.getX()) && !(caseY  < 0 || caseY >= gridGame.getY()) && !(gridGame.getGrille()[caseX0][caseY] == 0)) {
+        else if (newY>=0 &&!(caseX0 < 0 || caseX0 >= gridGame.getX()) && !(caseY  < 0 || caseY >= gridGame.getY()) && !(gridGame.getGrid()[caseX0][caseY] == 0)) {
             this.y=newY;
         }
-        else if (newX>=0 &&!(caseX < 0 || caseX >= gridGame.getX()) && !(caseY0  < 0 || caseY0 >= gridGame.getY()) &&!( gridGame.getGrille()[caseX][caseY0] == 0)) {
+        else if (newX>=0 &&!(caseX < 0 || caseX >= gridGame.getX()) && !(caseY0  < 0 || caseY0 >= gridGame.getY()) &&!( gridGame.getGrid()[caseX][caseY0] == 0)) {
             this.x=newX;
         }
 
         //System.out.println(listFruit.get(currentFruits).getName());
-        if(gridGame.getGrille()[caseX][caseY]== listFruit.get(currentFruits).getValue()){
+        if(gridGame.getGrid()[caseX][caseY]== listFruit.get(currentFruits).getValue()){
             this.x=30;
             this.y=30;
             Random rdm= new Random();
             int nbChoisie= rdm.nextInt(listFruit.size());
             currentFruits = nbChoisie;
-            mazeActivity.wordToFind.setText(listFruit.get(currentFruits).getName());
-            mazeActivity.chronometerSave.setText(mazeActivity.chronometer.getText());
-            mazeActivity.chronometer.setBase(SystemClock.elapsedRealtime());
+            gameActivity.wordToFind.setText(listFruit.get(currentFruits).getName());
+            gameActivity.chronometerSave.setText(gameActivity.chronometer.getText());
+            gameActivity.chronometer.setBase(SystemClock.elapsedRealtime());
         }
 
     }
@@ -256,26 +251,26 @@ public class GameView extends SurfaceView {
         int caseY=newY/largeurCase;
         int caseX0=this.x/largeurCase;
         int caseY0=this.y/largeurCase;
-        if (newX>=0 && newY>=0&&!(caseX < 0 || caseX >= gridGame.getX()) && !(caseY  < 0 || caseY >= gridGame.getY()) && !(gridGame.getGrille()[caseX][caseY] == 0)) {
+        if (newX>=0 && newY>=0&&!(caseX < 0 || caseX >= gridGame.getX()) && !(caseY  < 0 || caseY >= gridGame.getY()) && !(gridGame.getGrid()[caseX][caseY] == 0)) {
             this.x=newX;
             this.y=newY;
         }
-        else if (newY>=0 &&!(caseX0 < 0 || caseX0 >= gridGame.getX()) && !(caseY  < 0 || caseY >= gridGame.getY()) && !(gridGame.getGrille()[caseX0][caseY] == 0)) {
+        else if (newY>=0 &&!(caseX0 < 0 || caseX0 >= gridGame.getX()) && !(caseY  < 0 || caseY >= gridGame.getY()) && !(gridGame.getGrid()[caseX0][caseY] == 0)) {
             this.y=newY;
         }
-        else if (newX>=0 &&!(caseX < 0 || caseX >= gridGame.getX()) && !(caseY0  < 0 || caseY0 >= gridGame.getY()) &&!( gridGame.getGrille()[caseX][caseY0] == 0)) {
+        else if (newX>=0 &&!(caseX < 0 || caseX >= gridGame.getX()) && !(caseY0  < 0 || caseY0 >= gridGame.getY()) &&!( gridGame.getGrid()[caseX][caseY0] == 0)) {
             this.x=newX;
         }
         //System.out.println(listFruit.get(currentFruits).getName());
-        if(gridGame.getGrille()[caseX][caseY]== listFruit.get(currentFruits).getValue()){
+        if(gridGame.getGrid()[caseX][caseY]== listFruit.get(currentFruits).getValue()){
             Random rdm= new Random();
             int nbChoisie= rdm.nextInt(listFruit.size());
             currentFruits = nbChoisie;
-            mazeActivity.wordToFind.setText(listFruit.get(currentFruits).getName());
+            gameActivity.wordToFind.setText(listFruit.get(currentFruits).getName());
             this.x = 30;
             this.y = 30;
-            mazeActivity.chronometerSave.setText(mazeActivity.chronometer.getText());
-            mazeActivity.chronometer.setBase(SystemClock.elapsedRealtime());
+            gameActivity.chronometerSave.setText(gameActivity.chronometer.getText());
+            gameActivity.chronometer.setBase(SystemClock.elapsedRealtime());
         }
 
     }
@@ -334,13 +329,6 @@ public class GameView extends SurfaceView {
 
     public void activeOnTouche() {
         activeOnTouch=true;
-    }
-
-    public void setXY(int x,int y){
-        this.x=x;
-        this.y=y;
-        Log.e("TAG",x+" "+y);
-
     }
 
 }
