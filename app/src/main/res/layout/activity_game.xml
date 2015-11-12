@@ -1,0 +1,84 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:gravity="center"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".TheMaze"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:id="@+id/buttonSwitchView"/>
+        <TextView
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="  Temps : "
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal" />
+        <Chronometer
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:format="%s"
+            android:id="@+id/chronometer"/>
+    </LinearLayout>
+    <com.example.user.findsmth.GameView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id ="@+id/gameView">
+    </com.example.user.findsmth.GameView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Mot à trouver : "
+            android:id="@+id/textView3"
+            android:layout_gravity="center_horizontal" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="WordToFind"
+        android:id="@+id/wordToFind" />
+        </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Dernier score : "
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal" />
+    <Chronometer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:format="%s"
+        android:textSize="20dp"
+        android:id="@+id/chronometerSave"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

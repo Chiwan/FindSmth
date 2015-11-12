@@ -1,0 +1,66 @@
+package com.example.user.findsmth;
+
+/**
+ * Created by Jean-Philippe Kha on 12/11/2015.
+ */
+public class GridGame {
+    // x et y sont la tailles de la grille
+    private int x;
+    private int y;
+    private int[][] grille;
+    public GridGame(int x, int y){
+        this.x=x;
+        this.y=y;
+        grille=new int[x][y];
+    }
+    public GridGame(){
+        x=16;
+        y=16;
+        grille=new int[16][16];
+        //0 noir, 1 blanc 2 entré 3 sortie
+        for (int i =0;i<16;i++){
+            for(int j =0; j<16;j++) {
+                if(j==15){
+                    grille[i][j] =0;
+                }else if(i==15){
+                    grille[i][j] =0;
+                }else {
+                    grille[i][j] = 1;
+                }
+            }
+        }
+        grille[0][0]=2;
+        grille[5][10]=3;
+        grille[3][5]=4;
+        grille[10][14]=5;
+        grille[14][14]=6;
+        grille[4][14]=7;
+        grille[10][5]=8;
+
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int[][] getGrille() {
+        return grille;
+    }
+
+    public void setGrille(int[][] grille) {
+        this.grille = grille;
+    }
+
+}
